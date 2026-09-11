@@ -3,71 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GitHub Pages Guide</title>
+  <title>Multilingual Shipping Navigator</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <div class="background-blur"></div>
 
-  <main class="container">
-    <header class="header">
-      <span class="badge">Troubleshooting Guide</span>
-      <h1>Why Isn't My Link Generated?</h1>
-      <p>Follow these quick steps to get your GitHub Pages site deployed and live.</p>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-icon"><i class="fa-solid fa-box-archive"></i></div>
+      <h1>多言語ナビゲーター</h1>
+      <p class="subtitle">Japan Convenience Store Shipping Assistant</p>
     </header>
 
-    <div class="steps-grid">
-      <!-- Step 1 -->
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-image">
-          <img src="https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=800&q=80" alt="GitHub Branch Settings">
-          <div class="step-tag">Step 1</div>
+    <!-- Scan Banner / Upload Action -->
+    <section class="scan-section">
+      <div class="scan-card">
+        <div class="scan-preview" id="scanPreview">
+          <i class="fa-solid fa-camera scan-icon"></i>
+          <p>Point camera or upload a photo of the shipping slip (伝票)</p>
         </div>
-        <div class="card-content">
-          <h3>Save Branch Selection</h3>
-          <p>Under <strong>Build and deployment</strong>, set your source branch to <code>main</code> and folder to <code>/(root)</code>. Click <strong>Save</strong>.</p>
-        </div>
+        <input type="file" id="imageInput" accept="image/*" capture="environment" hidden>
+        <button class="btn btn-primary" id="scanBtn">
+          <i class="fa-solid fa-camera"></i> Scan Package Label
+        </button>
+      </div>
+    </section>
+
+    <!-- Detected Fields Container -->
+    <main class="content-section">
+      <div class="section-title">
+        <h2><i class="fa-solid fa-list-check"></i> Detected Slip Fields (伝票)</h2>
       </div>
 
-      <!-- Step 2 -->
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-image">
-          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" alt="Code Repository">
-          <div class="step-tag">Step 2</div>
-        </div>
-        <div class="card-content">
-          <h3>Trigger Initial Deployment</h3>
-          <p>Ensure your <code>main</code> branch contains an <code>index.html</code> or <code>README.md</code> file so GitHub can start the build process.</p>
-        </div>
+      <div class="fields-grid">
+
+        <!-- Field 1: Destination Address -->
+        <article class="field-card">
+          <div class="card-header">
+            <span class="jp-title">お届け先 住所</span>
+            <span class="furigana">おとどけさき じゅうしょ</span>
+          </div>
+          <div class="card-body">
+            <div class="translation">
+              <span class="badge">English</span>
+              <strong>Destination Address</strong>
+            </div>
+            <div class="tip">
+              <i class="fa-solid fa-circle-info"></i>
+              <span>Write the recipient's prefecture, city, and street number clearly here.</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Field 2: Item Name -->
+        <article class="field-card">
+          <div class="card-header">
+            <span class="jp-title">品名</span>
+            <span class="furigana">ひんめい</span>
+          </div>
+          <div class="card-body">
+            <div class="translation">
+              <span class="badge">English</span>
+              <strong>Contents / Item Name</strong>
+            </div>
+            <div class="tip">
+              <i class="fa-solid fa-circle-info"></i>
+              <span>Be specific (e.g., "Clothes / 服", "Books / 本"). Avoid vague terms like "Gift".</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Field 3: Sender Information -->
+        <article class="field-card">
+          <div class="card-header">
+            <span class="jp-title">依頼主</span>
+            <span class="furigana">いらいぬし</span>
+          </div>
+          <div class="card-body">
+            <div class="translation">
+              <span class="badge">English</span>
+              <strong>Sender Information</strong>
+            </div>
+            <div class="tip">
+              <i class="fa-solid fa-circle-info"></i>
+              <span>Fill in your own Japanese phone number and address here.</span>
+            </div>
+          </div>
+        </article>
+
       </div>
 
-      <!-- Step 3 -->
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-image">
-          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Dashboard Status">
-          <div class="step-tag">Step 3</div>
-        </div>
-        <div class="card-content">
-          <h3>Check Workflow Status</h3>
-          <p>Go to the <strong>Actions</strong> tab in your repository to confirm that <code>pages-build-deployment</code> has finished running.</p>
+      <!-- Next Step Banner -->
+      <div class="next-step-card">
+        <div class="step-icon"><i class="fa-solid fa-store"></i></div>
+        <div class="step-content">
+          <h3>Next Step</h3>
+          <p>Hand the completed form and package to the store clerk (店員さん).</p>
         </div>
       </div>
-    </div>
-
-    <!-- Live Status Box -->
-    <div class="status-banner">
-      <div class="status-icon">🚀</div>
-      <div class="status-text">
-        <h4>Ready to verify?</h4>
-        <p>Refresh your Pages settings after a minute to view your new URL:</p>
-        <code id="site-url">https://your-username.github.io/your-repo/</code>
-      </div>
-      <button class="copy-btn" id="copyBtn">Copy Link</button>
-    </div>
-  </main>
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
