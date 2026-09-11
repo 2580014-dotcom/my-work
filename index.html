@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multilingual Shipping Navigator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1>多言語ナビゲーター</h1>
+      <p class="subtitle">Japan Convenience Store Shipping Assistant</p>
+    </header>
+
+    <main class="app-body">
+      <!-- Camera Viewport / Scanner Section -->
+      <section class="scanner-card">
+        <div class="viewport" id="viewport">
+          <div class="scan-overlay">
+            <div class="scan-line"></div>
+            <p id="camera-status">Point camera at the shipping slip (伝票)</p>
+          </div>
+        </div>
+        <button id="scan-btn" class="primary-btn">📸 Scan Package Label</button>
+      </section>
+
+      <!-- Results & Navigation Output -->
+      <section class="result-card hidden" id="result-card">
+        <h2>Detected Slip Fields (伝票)</h2>
+        
+        <div class="field-item">
+          <div class="field-header">
+            <span class="kanji">お届け先 住所</span>
+            <span class="furigana">(おとどけさき じゅうしょ)</span>
+          </div>
+          <p class="translation"><b>English:</b> Destination Address</p>
+          <p class="guide"><b>Tip:</b> Write the recipient's prefecture, city, and street number clearly here.</p>
+        </div>
+
+        <div class="field-item">
+          <div class="field-header">
+            <span class="kanji">品名</span>
+            <span class="furigana">(ひんめい)</span>
+          </div>
+          <p class="translation"><b>English:</b> Contents / Item Name</p>
+          <p class="guide"><b>Tip:</b> Be specific (e.g., "Clothes / 服", "Books / 本"). Avoid vague terms like "Gift".</p>
+        </div>
+
+        <div class="field-item">
+          <div class="field-header">
+            <span class="kanji">依頼主</span>
+            <span class="furigana">(いらいぬし)</span>
+          </div>
+          <p class="translation"><b>English:</b> Sender Information</p>
+          <p class="guide"><b>Tip:</b> Fill in your own Japanese phone number and address here.</p>
+        </div>
+
+        <div class="action-box">
+          <h3>Next Step:</h3>
+          <p>Hand the completed form and package to the store clerk (店員さん).</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
