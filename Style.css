@@ -1,172 +1,202 @@
 :root {
-  --primary-color: #0070f3;
-  --bg-color: #f4f6f8;
-  --card-bg: #ffffff;
-  --text-color: #333333;
-  --text-muted: #666666;
-  --border-radius: 12px;
+  --bg-color: #0f172a;
+  --card-bg: rgba(30, 41, 59, 0.7);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --primary-accent: #38bdf8;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
+  font-family: 'Inter', sans-serif;
   background-color: var(--bg-color);
-  color: var(--text-color);
+  color: var(--text-main);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  padding: 16px;
+  align-items: center;
+  padding: 2rem;
+  overflow-x: hidden;
 }
 
-.app-container {
+/* Gradient Background Effect */
+.background-blur {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.container {
+  max-width: 1000px;
   width: 100%;
-  max-width: 480px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 }
 
-.app-header {
+.header {
   text-align: center;
-  padding: 12px 0;
+  margin-bottom: 3rem;
 }
 
-.app-header h1 {
-  font-size: 1.5rem;
-  color: var(--primary-color);
-}
-
-.subtitle {
+.badge {
+  background: rgba(56, 189, 248, 0.1);
+  color: var(--primary-accent);
   font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  margin: 1rem 0 0.5rem;
+}
+
+.header p {
   color: var(--text-muted);
+  font-size: 1.1rem;
 }
 
-.scanner-card, .result-card {
+/* Card Grid Layout */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.card {
   background: var(--card-bg);
-  border-radius: var(--border-radius);
-  padding: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
-.viewport {
-  width: 100%;
-  height: 220px;
-  background-color: #222;
-  border-radius: 8px;
+.card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.card-image {
   position: relative;
+  height: 160px;
   overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.step-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(4px);
+  color: var(--primary-accent);
+  padding: 0.3rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-content h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-content p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+code {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  color: var(--primary-accent);
+  font-family: monospace;
+}
+
+/* Status Banner */
+.status-banner {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
+  gap: 1.5rem;
+  backdrop-filter: blur(12px);
 }
 
-.scan-overlay {
-  text-align: center;
-  color: #fff;
-  font-size: 0.9rem;
-  padding: 0 16px;
-  z-index: 2;
+.status-icon {
+  font-size: 2rem;
 }
 
-.scan-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background-color: #00ff88;
-  box-shadow: 0 0 8px #00ff88;
-  display: none;
+.status-text {
+  flex-grow: 1;
 }
 
-.scanning .scan-line {
-  display: block;
-  animation: scan 2s infinite linear;
+.status-text h4 {
+  margin-bottom: 0.2rem;
 }
 
-@keyframes scan {
-  0% { top: 0%; }
-  50% { top: 95%; }
-  100% { top: 0%; }
-}
-
-.primary-btn {
-  width: 100%;
-  padding: 14px;
-  background-color: var(--primary-color);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.primary-btn:hover {
-  background-color: #0056b3;
-}
-
-.hidden {
-  display: none;
-}
-
-.result-card h2 {
-  font-size: 1.1rem;
-  margin-bottom: 16px;
-  border-bottom: 2px solid var(--bg-color);
-  padding-bottom: 8px;
-}
-
-.field-item {
-  background-color: #f8f9fa;
-  border-left: 4px solid var(--primary-color);
-  padding: 12px;
-  border-radius: 4px;
-  margin-bottom: 12px;
-}
-
-.field-header {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 4px;
-}
-
-.kanji {
-  font-weight: bold;
-  font-size: 1.1rem;
-}
-
-.furigana {
-  font-size: 0.85rem;
+.status-text p {
   color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
 }
 
-.translation, .guide {
-  font-size: 0.85rem;
-  margin-top: 4px;
-}
-
-.action-box {
-  background-color: #e6f0ff;
-  border: 1px solid #b3d4ff;
-  padding: 12px;
+.copy-btn {
+  background: var(--primary-accent);
+  color: #0f172a;
+  border: none;
+  padding: 0.75rem 1.25rem;
   border-radius: 8px;
-  margin-top: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.1s ease;
 }
 
-.action-box h3 {
-  font-size: 0.95rem;
-  color: var(--primary-color);
-  margin-bottom: 4px;
+.copy-btn:hover {
+  opacity: 0.9;
 }
 
-.action-box p {
-  font-size: 0.85rem;
+.copy-btn:active {
+  transform: scale(0.96);
+}
+
+@media (max-width: 600px) {
+  .status-banner {
+    flex-direction: column;
+    text-align: center;
+  }
 }
