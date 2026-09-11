@@ -4,115 +4,415 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Multilingual Shipping Navigator</title>
-  <link rel="stylesheet" href="style.css">
   <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* CSS Variables & Theme Options */
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent-bg: #f1f5f9;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 640px;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      height: fit-content;
+    }
+
+    /* Top Navigation / Language Selector */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--primary);
+    }
+
+    .brand i {
+      font-size: 1.5rem;
+    }
+
+    .brand h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .lang-select-wrapper {
+      position: relative;
+    }
+
+    .lang-select-wrapper select {
+      appearance: none;
+      background: var(--accent-bg);
+      border: 1px solid var(--border);
+      padding: 8px 32px 8px 12px;
+      border-radius: 8px;
+      font-weight: 500;
+      color: var(--text-main);
+      cursor: pointer;
+      outline: none;
+      font-size: 0.9rem;
+    }
+
+    .lang-select-wrapper i {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    /* Hero Banner Area */
+    .hero-card {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      color: white;
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-card p {
+      font-size: 0.95rem;
+      color: #94a3b8;
+    }
+
+    .scan-btn {
+      margin-top: 8px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s ease;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .scan-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    /* Fields List */
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .field-card {
+      background: var(--accent-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+
+    .field-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .field-name-jp {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .field-furigana {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-left: 6px;
+      font-weight: normal;
+    }
+
+    .field-name-translated {
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+
+    .field-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .field-desc i {
+      margin-top: 2px;
+    }
+
+    /* Next Step Box */
+    .next-step {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+      padding: 16px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .next-step i {
+      font-size: 1.4rem;
+      color: var(--primary);
+    }
+  </style>
 </head>
 <body>
 
   <div class="app-container">
     <!-- Header -->
-    <header class="app-header">
-      <div class="header-icon"><i class="fa-solid fa-box-archive"></i></div>
-      <h1>多言語ナビゲーター</h1>
-      <p class="subtitle">Japan Convenience Store Shipping Assistant</p>
+    <header class="header">
+      <div class="brand">
+        <i class="fa-solid fa-box-archive"></i>
+        <h1 id="app-title">Shipping Navigator</h1>
+      </div>
+      <div class="lang-select-wrapper">
+        <select id="lang-selector">
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+          <option value="zh-TW">繁體中文</option>
+          <option value="zh-CN">简体中文</option>
+          <option value="ko">한국어</option>
+        </select>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
     </header>
 
-    <!-- Scan Section / Image Preview -->
-    <section class="scan-section">
-      <div class="scan-card">
-        <div class="scan-preview" id="scanPreview">
-          <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80" alt="Shipping Box Preview" class="sample-img" id="previewImg">
-          <div class="overlay-text">
-            <i class="fa-solid fa-camera scan-icon"></i>
-            <p>Point camera or upload a photo of the shipping slip (伝票)</p>
+    <!-- Hero / Scanner -->
+    <div class="hero-card">
+      <p id="hero-subtitle">Japan Convenience Store Shipping Assistant</p>
+      <button class="scan-btn">
+        <i class="fa-solid fa-camera"></i>
+        <span id="btn-scan">Scan Package Label</span>
+      </button>
+    </div>
+
+    <!-- Detected Slip Fields -->
+    <section>
+      <h2 class="section-title">
+        <i class="fa-solid fa-list-check" style="color: var(--primary);"></i>
+        <span id="title-fields">Detected Slip Fields (伝票)</span>
+      </h2>
+
+      <!-- Address -->
+      <div class="field-card">
+        <div class="field-header">
+          <div>
+            <span class="field-name-jp">お届け先 住所</span>
+            <span class="field-furigana">おとどけさき じゅうしょ</span>
           </div>
+          <span class="field-name-translated" id="field-1-title">Destination Address</span>
         </div>
-        <input type="file" id="imageInput" accept="image/*" capture="environment" hidden>
-        <button class="btn btn-primary" id="scanBtn">
-          <i class="fa-solid fa-camera"></i> Scan Package Label
-        </button>
+        <div class="field-desc">
+          <i class="fa-solid fa-circle-info"></i>
+          <span id="field-1-desc">Write the recipient's prefecture, city, and street number clearly here.</span>
+        </div>
+      </div>
+
+      <!-- Item Name -->
+      <div class="field-card">
+        <div class="field-header">
+          <div>
+            <span class="field-name-jp">品名</span>
+            <span class="field-furigana">ひんめい</span>
+          </div>
+          <span class="field-name-translated" id="field-2-title">Contents / Item Name</span>
+        </div>
+        <div class="field-desc">
+          <i class="fa-solid fa-circle-info"></i>
+          <span id="field-2-desc">Be specific (e.g., "Clothes", "Books"). Avoid vague terms like "Gift".</span>
+        </div>
+      </div>
+
+      <!-- Sender Info -->
+      <div class="field-card">
+        <div class="field-header">
+          <div>
+            <span class="field-name-jp">依頼主</span>
+            <span class="field-furigana">いらいぬし</span>
+          </div>
+          <span class="field-name-translated" id="field-3-title">Sender Information</span>
+        </div>
+        <div class="field-desc">
+          <i class="fa-solid fa-circle-info"></i>
+          <span id="field-3-desc">Fill in your own Japanese phone number and address here.</span>
+        </div>
       </div>
     </section>
 
-    <!-- Detected Fields Container -->
-    <main class="content-section">
-      <div class="section-title">
-        <h2><i class="fa-solid fa-list-check"></i> Detected Slip Fields (伝票)</h2>
+    <!-- Next Step Banner -->
+    <div class="next-step">
+      <i class="fa-solid fa-store"></i>
+      <div>
+        <strong id="next-step-title">Next Step</strong>: 
+        <span id="next-step-desc">Hand the completed form and package to the store clerk (店員さん).</span>
       </div>
-
-      <div class="fields-grid">
-
-        <!-- Field 1: Destination Address -->
-        <article class="field-card">
-          <div class="card-header">
-            <span class="jp-title">お届け先 住所</span>
-            <span class="furigana">おとどけさき じゅうしょ</span>
-          </div>
-          <div class="card-body">
-            <div class="translation">
-              <span class="badge">English</span>
-              <strong>Destination Address</strong>
-            </div>
-            <div class="tip">
-              <i class="fa-solid fa-circle-info"></i>
-              <span>Write the recipient's prefecture, city, and street number clearly here.</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Field 2: Item Name -->
-        <article class="field-card">
-          <div class="card-header">
-            <span class="jp-title">品名</span>
-            <span class="furigana">ひんめい</span>
-          </div>
-          <div class="card-body">
-            <div class="translation">
-              <span class="badge">English</span>
-              <strong>Contents / Item Name</strong>
-            </div>
-            <div class="tip">
-              <i class="fa-solid fa-circle-info"></i>
-              <span>Be specific (e.g., "Clothes / 服", "Books / 本"). Avoid vague terms like "Gift".</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Field 3: Sender Information -->
-        <article class="field-card">
-          <div class="card-header">
-            <span class="jp-title">依頼主</span>
-            <span class="furigana">いらいぬし</span>
-          </div>
-          <div class="card-body">
-            <div class="translation">
-              <span class="badge">English</span>
-              <strong>Sender Information</strong>
-            </div>
-            <div class="tip">
-              <i class="fa-solid fa-circle-info"></i>
-              <span>Fill in your own Japanese phone number and address here.</span>
-            </div>
-          </div>
-        </article>
-
-      </div>
-
-      <!-- Next Step Banner -->
-      <div class="next-step-card">
-        <div class="step-icon"><i class="fa-solid fa-store"></i></div>
-        <div class="step-content">
-          <h3>Next Step</h3>
-          <p>Hand the completed form and package to the store clerk (店員さん).</p>
-        </div>
-      </div>
-    </main>
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- JavaScript Translation Logic -->
+  <script>
+    const translations = {
+      en: {
+        appTitle: "Shipping Navigator",
+        heroSubtitle: "Japan Convenience Store Shipping Assistant",
+        btnScan: "Scan Package Label",
+        titleFields: "Detected Slip Fields (伝票)",
+        field1Title: "Destination Address",
+        field1Desc: "Write the recipient's prefecture, city, and street number clearly here.",
+        field2Title: "Contents / Item Name",
+        field2Desc: "Be specific (e.g., 'Clothes', 'Books'). Avoid vague terms like 'Gift'.",
+        field3Title: "Sender Information",
+        field3Desc: "Fill in your own Japanese phone number and address here.",
+        nextStepTitle: "Next Step",
+        nextStepDesc: "Hand the completed form and package to the store clerk (店員さん)."
+      },
+      ja: {
+        appTitle: "多言語ナビゲーター",
+        heroSubtitle: "日本のコンビニ発送アシスタント",
+        btnScan: "伝票をスキャンする",
+        titleFields: "検出された伝票項目",
+        field1Title: "お届け先 住所",
+        field1Desc: "都道府県、市区町村、番地を正確にご記入ください。",
+        field2Title: "品名",
+        field2Desc: "「服」や「本」など具体的にお書きください。「日用品」や「贈り物」等の曖昧な表現は避けてください。",
+        field3Title: "ご依頼主",
+        field3Desc: "お客様の日本国内での電話番号とご住所をご記入ください。",
+        nextStepTitle: "次のステップ",
+        nextStepDesc: "記入済みの伝票とお荷物をレジの店員さんにお渡しください。"
+      },
+      "zh-TW": {
+        appTitle: "多語言寄件導航",
+        heroSubtitle: "日本便利商店寄件助手",
+        btnScan: "掃描寄件單 (伝票)",
+        titleFields: "已識別單據欄位",
+        field1Title: "收件人地址",
+        field1Desc: "請清楚填寫收件人的都道府縣、市區町村及門牌號碼。",
+        field2Title: "物品名稱",
+        field2Desc: "請具體填寫（如：衣服、書籍）。請避免使用「禮物」等模糊詞彙。",
+        field3Title: "寄件人資訊",
+        field3Desc: "請在此填寫您在日本的聯絡電話與地址。",
+        nextStepTitle: "下一步",
+        nextStepDesc: "將填寫完成的單據與包裹一併交給便利商店店員。"
+      },
+      "zh-CN": {
+        appTitle: "多语言寄件导航",
+        heroSubtitle: "日本便利店寄件助手",
+        btnScan: "扫描寄件单 (伝票)",
+        titleFields: "已识别单据栏目",
+        field1Title: "收件人地址",
+        field1Desc: "请清楚填写收件人的都道府县、市区町村及门牌号码。",
+        field2Title: "物品名称",
+        field2Desc: "请具体填写（如：衣服、书籍）。请避免使用“礼物”等模糊词汇。",
+        field3Title: "寄件人信息",
+        field3Desc: "请在此填写您在日本的联系电话与地址。",
+        nextStepTitle: "下一步",
+        nextStepDesc: "将填写完成的单据与包裹一并交给便利店店员。"
+      },
+      ko: {
+        appTitle: "다국어 배송 네비게이터",
+        heroSubtitle: "일본 편의점 택배 배송 도우미",
+        btnScan: "송장 스캔하기",
+        titleFields: "감지된 송장 항목",
+        field1Title: "받는 사람 주소",
+        field1Desc: "받는 분의 도도부현, 시구정촌 및 번지를 정확히 기재해 주세요.",
+        field2Title: "물품명",
+        field2Desc: "구체적으로 작성해 주세요 (예: 의류, 서적). '선물' 등 모호한 표현은 피해주세요.",
+        field3Title: "보내는 사람 정보",
+        field3Desc: "본인의 일본 내 전화번호와 주소를 입력해 주세요.",
+        nextStepTitle: "다음 단계",
+        nextStepDesc: "작성한 송장과 물품을 편의점 직원에게 전달하세요."
+      }
+    };
+
+    const langSelector = document.getElementById('lang-selector');
+
+    function updateLanguage(lang) {
+      const data = translations[lang] || translations.en;
+      
+      document.getElementById('app-title').textContent = data.appTitle;
+      document.getElementById('hero-subtitle').textContent = data.heroSubtitle;
+      document.getElementById('btn-scan').textContent = data.btnScan;
+      document.getElementById('title-fields').textContent = data.titleFields;
+      document.getElementById('field-1-title').textContent = data.field1Title;
+      document.getElementById('field-1-desc').textContent = data.field1Desc;
+      document.getElementById('field-2-title').textContent = data.field2Title;
+      document.getElementById('field-2-desc').textContent = data.field2Desc;
+      document.getElementById('field-3-title').textContent = data.field3Title;
+      document.getElementById('field-3-desc').textContent = data.field3Desc;
+      document.getElementById('next-step-title').textContent = data.nextStepTitle;
+      document.getElementById('next-step-desc').textContent = data.nextStepDesc;
+    }
+
+    langSelector.addEventListener('change', (e) => {
+      updateLanguage(e.target.value);
+    });
+  </script>
 </body>
 </html>
