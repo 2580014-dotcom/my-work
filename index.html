@@ -21,12 +21,15 @@
       <p class="subtitle">Japan Convenience Store Shipping Assistant</p>
     </header>
 
-    <!-- Scan Banner / Upload Action -->
+    <!-- Scan Section / Image Preview -->
     <section class="scan-section">
       <div class="scan-card">
         <div class="scan-preview" id="scanPreview">
-          <i class="fa-solid fa-camera scan-icon"></i>
-          <p>Point camera or upload a photo of the shipping slip (伝票)</p>
+          <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80" alt="Shipping Box Preview" class="sample-img" id="previewImg">
+          <div class="overlay-text">
+            <i class="fa-solid fa-camera scan-icon"></i>
+            <p>Point camera or upload a photo of the shipping slip (伝票)</p>
+          </div>
         </div>
         <input type="file" id="imageInput" accept="image/*" capture="environment" hidden>
         <button class="btn btn-primary" id="scanBtn">
